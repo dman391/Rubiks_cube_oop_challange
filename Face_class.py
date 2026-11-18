@@ -26,43 +26,7 @@ class Face:
             
             self.grid = rotated_face
     
-    def is_solved(self):
-        
-        middle = self.grid[1][1]
-        all_elements = []
-        
-        for i in self.grid:
-            for j in i:
-                all_elements.append(j == middle)
-        return all(all_elements)
-        
-
-class RubiksCube:
-    def __init__(self) -> None:
-        
-        self.faces = {
-                    "U": Face("W"),
-                    "D": Face("Y"),
-                    "F": Face("G"),
-                    "B": Face("B"),
-                    "L": Face("O"),
-                    "R": Face("R")
-                    }
-        self.move_history = []
-
     def is_solved(self) -> bool:
-        
-        for key in list(self.faces.keys):
-            if self.faces[key].is_solved == False:
-                  return False
-            return True
+        return all(face.is_solved() for face in self.faces.values())
 
-    def rotate(face, direction) -> None:    
-    
-    #apply_moves(moves)
-    #get_state()
-
-#class Scrambler
-
-#class Solve
 
