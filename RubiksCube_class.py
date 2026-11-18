@@ -63,14 +63,13 @@ class RubiksCube:
         self.move_history = []
         
     def is_solved(self) -> bool:
-        
-        for key in list(self.faces.keys):
-            if self.faces[key].is_solved == False:
-                  return False
-            return True
+        for face in self.faces.values():
+            if not face.is_solved():
+                return False
 
+        return True
     
-    def get_edge(self, face, edge, reverse=False):
+    def get_edge(self, face : str, edge : str, reverse=False):
 
         grid = self.faces[face].grid
 
@@ -95,7 +94,7 @@ class RubiksCube:
         return values
             
     
-    def set_edge(self, face, edge, values, reverse=False):
+    def set_edge(self, face : str, edge : str, values : "str", reverse=False):
 
         grid = self.faces[face].grid
         values = list(values)
@@ -121,7 +120,42 @@ class RubiksCube:
             raise ValueError("Invalid edge")
         
     
-    #def rotate(face, direction) -> None:    
+    def rotate(self, face, direction) -> None:    
+       
+        # Get the four affected edges
+        neighbours = self.adjacent[face]
+
+        # Save their current values
+        edges = [
+            self.get_edge(f, e, reverse)
+            for f, e, reverse in neighbours
+        ]
+
+        # Rotate the selected face
+        if direction == "clockwise":
+            self.faces[face].rotate_clockwise()
+            shift = -1
+
+        elif direction == "anticlockwise":
+            self.faces[face].rotate_anti_clockwise()
+            shift = 1
+
+        else:
+            raise ValueError("Invalid direction")
+
+        for i in range(4):
+            f, e, reverse = neighbours[i]
+
+            self.set_edge(
+                f,
+                e,
+                edges[(i + shift) % 4],
+                reverse
+            )
+
+        self.move_history.append((face, direction))
+        
+    
     
     #apply_moves(moves)
     #get_state()
@@ -131,5 +165,11 @@ class RubiksCube:
 #class Solve
 
 
-my_cube = RubiksCube()
-my_cube.get_edge("U","top")
+cube = RubiksCube()
+
+cube.rotate("U", "clockwise")
+cube.rotate("U", "anticlockwise")
+
+print(cube.faces["U"].grid)
+
+print(cube.is_solved())

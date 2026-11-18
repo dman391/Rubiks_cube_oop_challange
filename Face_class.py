@@ -27,6 +27,12 @@ class Face:
             self.grid = rotated_face
     
     def is_solved(self) -> bool:
-        return all(face.is_solved() for face in self.faces.values())
+        true_colour = self.grid[1][1]
+        for row in self.grid:
+            for cublet in row:
+                  if cublet != true_colour:
+                        return False
+        return True
+        
 
 
