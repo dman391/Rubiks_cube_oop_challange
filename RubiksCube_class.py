@@ -159,7 +159,7 @@ class RubiksCube:
     
     def scrambler(self):
         
-        number_shuffles = random.randint(10, 30)
+        number_shuffles = random.randint(6,7)
         for i in range(number_shuffles):
             selected_face = random.choice(list(self.faces.keys()))
             random_rotation = random.choice(["clockwise", "anticlockwise"])
@@ -167,7 +167,5 @@ class RubiksCube:
 
 
 
-cube = RubiksCube()
 
-print(cube.faces)
 
