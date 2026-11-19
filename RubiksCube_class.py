@@ -1,5 +1,5 @@
 from Face_class import Face
-
+import random
 
 
 class RubiksCube:
@@ -157,19 +157,17 @@ class RubiksCube:
         
     
     
-    #apply_moves(moves)
-    #get_state()
+    def scrambler(self):
+        
+        number_shuffles = random.randint(10, 30)
+        for i in range(number_shuffles):
+            selected_face = random.choice(list(self.faces.keys()))
+            random_rotation = random.choice(["clockwise", "anticlockwise"])
+            self.rotate(selected_face, random_rotation)
 
-#class Scrambler
-
-#class Solve
 
 
 cube = RubiksCube()
 
-cube.rotate("U", "clockwise")
-cube.rotate("U", "anticlockwise")
+print(cube.faces)
 
-print(cube.faces["U"].grid)
-
-print(cube.is_solved())
