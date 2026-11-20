@@ -53,7 +53,6 @@ class Solver(RubiksCube):
                 else:
                     next_cube.rotate(move, "clockwise")
 
-                # 2. Only track the 12-edge orientation tuple in visited!
                 next_id = state_fn(next_cube)
 
                 if next_id not in visited:
@@ -131,7 +130,6 @@ class Solver(RubiksCube):
         (("B", 1, 2), ("L", 1, 0)),  # BL
     )
 
-    # Cyclic sticker order, starting with the U/D face.
     CORNER_POSITIONS = (
         (("U", 2, 2), ("R", 0, 0), ("F", 0, 2)),  # URF
         (("U", 2, 0), ("F", 0, 0), ("L", 0, 2)),  # UFL
@@ -294,17 +292,11 @@ class Solver(RubiksCube):
             cube, self.EDGE_POSITIONS
         )
 
-        # Give equivalent corner arrangements the same search key.
-        # This includes the extra corner constraint beyond tetrads.
         corner_coset = min(
             tuple(relabel[piece] for piece in corners)
             for relabel in self._get_half_turn_corners()
         )
 
-        # The three edge groups preserved by half turns:
-        # 0: UF, UB, DF, DB
-        # 1: UL, UR, DL, DR
-        # 2: FR, FL, BR, BL
         edge_orbit = (0, 0, 1, 1, 0, 0, 1, 1, 2, 2, 2, 2)
 
         return (
@@ -351,12 +343,15 @@ class Solver(RubiksCube):
                 solution.extend(info)      
         return solution
 
-if __name__ == "__main__":
-    solver = Solver()
-    solver.scrambler()
 
-    solution = solver.solve()
 
-    print("Solution:", solution)
-    assert solver.is_solved(), "Failed: cube is not solved!"
-    print("Test passed!")
+"""
+solver = Solver()
+solver.scrambler()
+
+solution = solver.solve()
+
+print("Solution:", solution)
+assert solver.is_solved(), "Failed: cube is not solved!"
+print("Test passed!")
+"""
