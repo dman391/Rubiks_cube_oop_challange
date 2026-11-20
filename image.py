@@ -148,3 +148,5 @@ class CubeViewer:
         while True:
             rate(30)
 
+viewer = CubeViewer()
+viewer.run()
