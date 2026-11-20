@@ -1,6 +1,6 @@
 from Face_class import Face
 import random
-
+random.seed(4747)
 
 class RubiksCube:
     def __init__(self) -> None:

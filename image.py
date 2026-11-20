@@ -148,6 +148,3 @@ class CubeViewer:
         while True:
             rate(30)
 
-
-if __name__ == "__main__":
-    CubeViewer().run()
